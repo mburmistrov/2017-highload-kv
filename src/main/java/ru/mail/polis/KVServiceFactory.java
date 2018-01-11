@@ -1,8 +1,8 @@
 package ru.mail.polis;
 
 import org.jetbrains.annotations.NotNull;
-import ru.mail.polis.mburmistrov.MyFileDAO;
-import ru.mail.polis.mburmistrov.MyService;
+import ru.mail.polis.mburmistrov.service.KVServiceImpl;
+import ru.mail.polis.mburmistrov.storage.BasicStorage;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +49,7 @@ final class KVServiceFactory {
             throw new IllegalArgumentException("Path is not a directory: " + data);
         }
 
-        return new MyService(port, new MyFileDAO(data));
+        return new KVServiceImpl(port, new BasicStorage(data.getPath()));
     }
+
 }

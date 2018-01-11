@@ -1,20 +1,21 @@
-package ru.mail.polis.mburmistrov;
+package ru.mail.polis.mburmistrov.service;
 
 import com.sun.net.httpserver.HttpServer;
 import org.jetbrains.annotations.NotNull;
 import ru.mail.polis.KVService;
+import ru.mail.polis.mburmistrov.storage.Storage;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.NoSuchElementException;
 
-public class MyService implements KVService {
+public class KVServiceImpl implements KVService {
     private final static String PREFIX = "id=";
 
     @NotNull
     private final HttpServer server;
     @NotNull
-    private final MyDAO dao;
+    private final Storage dao;
 
     private static String extractId(@NotNull final String query) {
         if (!query.startsWith(PREFIX)) {
@@ -28,9 +29,9 @@ public class MyService implements KVService {
         return query.substring(PREFIX.length());
     }
 
-    public MyService(
+    public KVServiceImpl(
             int port,
-            @NotNull final MyDAO dao) throws IOException{
+            @NotNull final Storage dao) throws IOException{
         this.server =
                 HttpServer.create(
                     new InetSocketAddress(port),
